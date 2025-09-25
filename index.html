@@ -1,35 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paula Love</title>
-<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paula Love</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    body {
+      background-color: pink;
+      margin: 0;
+      font-family: sans-serif;
+      text-align: center;
+    }
+    model-viewer {
+      width: 100%;
+      height: 500px;
+    }
+  </style>
 </head>
 <body>
-<H2>Paula Love</H2>
-<model-viewer src="paula3d.glb"
-ios-src="paula3d.usdz"
-alt="Paula Love"
-ar
-auto-rotate
-camera-controls
-ar-modes="webxr scene-viewer quick-look"
-environment-image="neutral">
-</model-viewer>
-<script>
-async function checkARCoreCompatibility() {
-const modelViewer = document.getElementById('paula3d');
-const isARCoreSupported = await navigator.xr.isSessionSupported('immersive-ar');
-if (!isARCoreSupported) {
-modelViewer.removeAttribute('ar');
-modelViewer.removeAttribute('ar-modes');
-alert('Your device is not compatible with AR features. You can still view the 3D model.');
-}
-}
+  <h2>Paula Love</h2>
+  <model-viewer id="paula3d"
+    src="paula3d.glb"
+    ios-src="paula3d.usdz"
+    alt="Paula Love"
+    ar
+    auto-rotate
+    camera-controls
+    ar-modes="webxr scene-viewer quick-look"
+    environment-image="neutral">
+  </model-viewer>
 
-    document.addEventListener('DOMContentLoaded', checkARCoreCompatibility);  
-</script>  
+  <script>
+    async function checkARCoreCompatibility() {
+      const modelViewer = document.getElementById('paula3d');
+      if (navigator.xr && navigator.xr.isSessionSupported) {
+        const isARCoreSupported = await navigator.xr.isSessionSupported('immersive-ar');
+        if (!isARCoreSupported) {
+          modelViewer.removeAttribute('ar');
+          modelViewer.removeAttribute('ar-modes');
+          alert('Your device is not compatible with AR features. You can still view the 3D model.');
+        }
+      }
+    }
 
+    document.addEventListener('DOMContentLoaded', checkARCoreCompatibility);
+  </script>
 </body>
 </html>
